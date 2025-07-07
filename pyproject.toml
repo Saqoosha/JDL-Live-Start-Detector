@@ -27,7 +27,8 @@ dependencies = [
     "numpy>=2.2.0",
     "matplotlib>=3.10.0",
     "pydub>=0.25.0",
-    "scikit-learn>=1.7.0"
+    "scikit-learn>=1.7.0",
+    "yt-dlp>=2024.11.0"
 ]
 
 [project.optional-dependencies]
@@ -46,6 +47,8 @@ Issues = "https://github.com/saqoosha/jdl-beep-detector/issues"
 [project.scripts]
 jdl-detect = "scripts.jdl_beep_detector:detect_jdl_beeps"
 jdl-links = "scripts.create_youtube_links:create_youtube_links"
+youtube-beep-detect = "scripts.youtube_beep_detector:main"
+final-youtube-beep-detect = "scripts.final_youtube_beep_detector:main"
 
 [build-system]
 requires = ["hatchling"]

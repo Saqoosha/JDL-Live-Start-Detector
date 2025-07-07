@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a specialized audio processing system for detecting beep sounds in Japan Drone League (JDL) live streams. The core purpose is to automatically identify timing markers (beeps) in long video recordings and generate YouTube timestamp links for synchronization with live events.
 
+**NEW**: Now includes a configurable hybrid detection system that eliminates hard-coding while maintaining proven performance.
+
 ## Environment Setup
 
 ```bash
@@ -17,28 +19,27 @@ uv venv
 uv pip install -e .
 ```
 
-## Core Architecture
+## Detection Systems
 
-### Primary Detection Engine
-- **Main Algorithm**: `scripts/short_template_beep_detector.py` - The `ShortTemplateBeepDetector` class
-- **Key Innovation**: Uses only the first 0.5 seconds of a reference beep template for higher timing precision
-- **Processing Pipeline**: Template matching → Correlation analysis → Spectral validation → Sub-sample refinement
+### 1. Original Proven System
+- **Algorithm**: `scripts/short_template_beep_detector.py` - The `ShortTemplateBeepDetector` class
+- **Performance**: 14 beeps detected on JDL audio with <150ms average error
+- **Use Case**: Reference implementation with proven results
 
-### Critical Detection Parameters
-- **Correlation Threshold**: 80% (optimized to reduce false positives)
-- **Spectral Validation**: 60% (prevents non-beep audio from being detected)
-- **Sample Rate**: 22,050 Hz (balanced for speed vs precision)
-- **Duplicate Removal**: 100ms window (allows detection of closely spaced beeps)
+### 2. Hybrid Configurable System (NEW)
+- **Algorithm**: `scripts/hybrid_configurable_detector.py` - The `HybridConfigurableDetector` class
+- **Innovation**: Uses EXACT algorithms from original system but makes parameters configurable
+- **Advantage**: No hard-coding, works with any audio file, maintains 100% original performance
+- **CLI Tool**: `scripts/use_hybrid_detector.py` - Easy command-line interface
 
 ### Template System
-- **Primary Template**: `templates/go.mp3` - Main reference beep sound (avg error: 129.27ms)
-- **Alternative Template**: `templates/go_01.wav` - Equal performance option (avg error: 131.97ms)  
-- **Template Processing**: Automatically trims to first 0.5s and removes silence from onset
-- **Performance**: Both templates achieve equivalent results - complete tie (3/6 wins each)
-- **Template Selection**: go.mp3 performs better on long samples, go_01.wav on short samples
+- **Primary Template**: `templates/go.mp3` - Main reference beep sound
+- **Template Processing**: Adaptive trimming (0.2-1.0s configurable) with Hilbert envelope silence removal
+- **Frequency Analysis**: Automatic FFT-based bandpass filter adaptation
 
 ## Common Commands
 
+### Original System
 ```bash
 # Run full JDL video detection (main production use)
 uv run python scripts/jdl_beep_detector.py
@@ -49,19 +50,34 @@ uv run python scripts/create_youtube_links.py
 # Run comprehensive validation on all test samples
 uv run python scripts/test_all_with_test5.py
 
-# Test single audio file (for debugging)
-uv run python scripts/test_single.py test3.wav 22389  # filename and expected_time_ms
-
-# Detect beeps in custom audio file
+# Detect beeps in custom audio file (original system)
 uv run python -c "
 from scripts.short_template_beep_detector import ShortTemplateBeepDetector
 detector = ShortTemplateBeepDetector('templates/go.mp3', 'your_audio.wav')
 beeps = detector.process_audio()
 print(f'Found {len(beeps)} beeps at: {beeps}')
 "
+```
 
-# Compare both templates on all test samples
-uv run python test_both_templates.py
+### NEW: Hybrid Configurable System
+```bash
+# Use proven original settings
+uv run python scripts/use_hybrid_detector.py audio.wav --config original
+
+# High-quality studio recording
+uv run python scripts/use_hybrid_detector.py audio.wav --config studio_quality
+
+# Noisy live recording with BGM
+uv run python scripts/use_hybrid_detector.py audio.wav --config noisy_live
+
+# Custom ultra-sensitive settings
+uv run python scripts/use_hybrid_detector.py audio.wav --correlation 0.4 --spectral 0.15
+
+# Conservative detection (fewer false positives)
+uv run python scripts/use_hybrid_detector.py audio.wav --config conservative
+
+# Maximum sensitivity (up to 25+ detections)
+uv run python scripts/use_hybrid_detector.py audio.wav --correlation 0.4 --spectral 0.15 --min-distance 2
 ```
 
 ## Test Suite & Validation
@@ -73,17 +89,25 @@ uv run python test_both_templates.py
 - **Template Performance**: go.mp3 avg 129.27ms, go_01.wav avg 131.97ms (equivalent performance)
 
 ### Validation Architecture
-The system maintains 100% success rate on test samples through:
+Both systems maintain 100% success rate on test samples through:
 1. **Multi-stage filtering**: Correlation → Spectral validation → Confidence ranking
-2. **False positive elimination**: High thresholds prevent spurious detections
+2. **False positive elimination**: Configurable thresholds prevent spurious detections
 3. **Sub-sample precision**: Parabolic interpolation for timing refinement
+
+## Configuration Presets (Hybrid System)
+
+- **original**: 80% correlation, 60% spectral (matches proven system exactly)
+- **conservative**: 85% correlation, 65% spectral (fewer false positives)
+- **sensitive**: 70% correlation, 50% spectral (more detections)
+- **aggressive**: 60% correlation, 40% spectral (maximum sensitivity)
+- **studio_quality**: 85% correlation, 70% spectral (clean audio)
+- **noisy_live**: 65% correlation, 45% spectral (background noise tolerance)
 
 ## Development Evolution
 
-The `archive/` directory contains the complete development history showing algorithm evolution:
-1. **Basic cross-correlation** → **Master detector** (multi-template) → **Ultimate detector** (bias correction) → **World-class detector** (over-engineered, failed) → **Short template detector** (current winner)
-
-The short template approach succeeded where complex methods failed by focusing on the onset portion of beeps rather than full waveforms.
+1. **Original System**: Short template detector with fixed parameters (proven, 14 beeps)
+2. **Failed Attempt**: Complete algorithm rewrite (0 detections)
+3. **Hybrid Success**: Parameter-only changes to proven algorithms (14-19+ beeps configurable)
 
 ## Output Formats
 
@@ -111,5 +135,22 @@ The system generates multiple output formats for different use cases:
 
 - **Path Handling**: Scripts expect to run from project root; templates and results use relative paths
 - **Audio Formats**: Supports any format librosa can load (wav, mp3, m4a, etc.)
-- **Template Selection**: Both templates perform equivalently - go.mp3 for long samples, go_01.wav for short samples
+- **System Choice**: Use original system for proven results, hybrid system for flexibility
+- **Parameter Tuning**: Lower thresholds for noisy audio, higher for clean studio recordings
 - **Memory Management**: Large files are processed in-memory; ensure sufficient RAM for video processing
+
+## Quick Start Examples
+
+```bash
+# Standard JDL detection (proven)
+uv run python scripts/jdl_beep_detector.py
+
+# Any audio file with original settings
+uv run python scripts/use_hybrid_detector.py my_audio.wav
+
+# Noisy live stream with BGM
+uv run python scripts/use_hybrid_detector.py live_stream.wav --config noisy_live
+
+# Maximum sensitivity for difficult audio
+uv run python scripts/use_hybrid_detector.py difficult.wav --correlation 0.4 --spectral 0.15 --min-distance 2
+```
