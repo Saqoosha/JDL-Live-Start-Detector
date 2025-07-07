@@ -390,32 +390,17 @@ class PatternEnhancedDetector:
         
         created_files['detailed'] = txt_file
         
-        # 3. YouTube links HTML for easy navigation
-        html_file = f"results/{base_filename}_links.html"
-        with open(html_file, 'w', encoding='utf-8') as f:
-            f.write("""<!DOCTYPE html>
-<html>
-<head>
-    <title>JDL Pattern Detection Results</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .pattern { margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 5px; }
-        .timing { font-weight: bold; color: #0066cc; }
-        .link { margin-left: 20px; }
-        .stats { background: #e6f3ff; padding: 15px; border-radius: 5px; margin: 20px 0; }
-    </style>
-</head>
-<body>
-    <h1>🏁 JDL Pattern Detection Results</h1>
-    <div class="stats">
-        <h3>Detection Summary</h3>
-        <p><strong>Method:</strong> COUNT→GO Temporal Pattern Matching</p>
-        <p><strong>Total Patterns:</strong> """ + str(len(patterns)) + """</p>
-        <p><strong>Detection Range:</strong> """ + f"{self.config.min_gap_seconds}-{self.config.max_gap_seconds}" + """ seconds</p>
-    </div>
-    
-    <h2>Detected Race Start Sequences</h2>
-""")
+        # 3. YouTube links Markdown for easy navigation
+        md_file = f"results/{base_filename}_links.md"
+        with open(md_file, 'w', encoding='utf-8') as f:
+            f.write(f"# 🏁 JDL Pattern Detection Results\n\n")
+            
+            f.write(f"## Detection Summary\n\n")
+            f.write(f"- **Method**: COUNT→GO Temporal Pattern Matching\n")
+            f.write(f"- **Total Patterns**: {len(patterns)}\n")
+            f.write(f"- **Detection Range**: {self.config.min_gap_seconds}-{self.config.max_gap_seconds} seconds\n\n")
+            
+            f.write(f"## Detected Race Start Sequences\n\n")
             
             base_url = 'https://www.youtube.com/live/Z7sjETGD-dg?t='
             
@@ -424,19 +409,11 @@ class PatternEnhancedDetector:
                 minutes = seconds // 60
                 remaining_seconds = seconds % 60
                 
-                f.write(f"""    <div class="pattern">
-        <span class="timing">Pattern {pattern['sequence_number']}: {minutes:02d}:{remaining_seconds:02d}</span>
-        <span style="color: #666;">(Gap: {pattern['gap_seconds']:.1f}s)</span>
-        <div class="link">
-            <a href="{base_url}{seconds}" target="_blank">🎬 Watch on YouTube</a>
-        </div>
-    </div>
-""")
-            
-            f.write("""</body>
-</html>""")
+                f.write(f"### Pattern {pattern['sequence_number']}: {minutes:02d}:{remaining_seconds:02d}\n")
+                f.write(f"- **Gap**: {pattern['gap_seconds']:.1f}s\n")
+                f.write(f"- **YouTube Link**: [🎬 Watch on YouTube]({base_url}{seconds})\n\n")
         
-        created_files['html'] = html_file
+        created_files['markdown'] = md_file
         
         return created_files
 
