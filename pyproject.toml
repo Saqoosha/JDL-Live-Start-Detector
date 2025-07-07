@@ -6,8 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [
-    {name = "Saqoosha"},
-    {name = "Claude Code", email = "noreply@anthropic.com"}
+    {name = "Saqoosha"}
 ]
 keywords = ["audio", "pattern-detection", "count-go", "race-start", "jdl", "youtube", "synchronization", "temporal-analysis"]
 classifiers = [
