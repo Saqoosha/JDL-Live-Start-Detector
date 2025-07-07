@@ -89,9 +89,9 @@ The system uses carefully tuned parameters optimized for JDL live stream conditi
 ## Output Formats
 
 The system generates comprehensive output formats:
-- **results/JDL_pattern_enhanced.csv**: Race start timings with YouTube URLs
-- **results/JDL_pattern_enhanced_detailed.txt**: Human-readable detailed report
-- **results/JDL_pattern_enhanced_links.html**: Clickable web interface for navigation
+- **results/JAPAN DRONE LEAGUE 2025 Round4 Semi Final & Final_Z7sjETGD-dg.csv**: Race start timings with YouTube URLs
+- **results/JAPAN DRONE LEAGUE 2025 Round4 Semi Final & Final_Z7sjETGD-dg_detailed.txt**: Human-readable detailed report
+- **results/JAPAN DRONE LEAGUE 2025 Round4 Semi Final & Final_Z7sjETGD-dg_links.md**: Markdown navigation with YouTube links
 
 ## Performance Characteristics
 
@@ -126,7 +126,7 @@ The system generates comprehensive output formats:
 uv run python scripts/jdl_detector.py
 
 # Check results
-open results/JDL_pattern_enhanced_links.html
+open results/JAPAN_DRONE_LEAGUE_2025_Round4_Semi_Final_&_Final_Z7sjETGD-dg_links.md
 ```
 
 ## Technical Innovation

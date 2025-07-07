@@ -453,8 +453,9 @@ def detect_jdl_patterns_enhanced() -> List[Dict]:
         print(f'\n🎉 SUCCESS! Found {len(patterns)} COUNT→GO patterns')
         print(f'⏱️  Processing time: {processing_time:.1f} seconds')
         
-        # Save results
-        files = detector.save_results(patterns, "JDL_pattern_enhanced")
+        # Save results with YouTube title in filename
+        base_filename = "JAPAN DRONE LEAGUE 2025 Round4 Semi Final & Final_Z7sjETGD-dg"
+        files = detector.save_results(patterns, base_filename)
         
         print(f'\n💾 Results saved:')
         for file_type, filename in files.items():
