@@ -305,13 +305,14 @@ class PatternEnhancedDetector:
         
         return cleaned
     
-    def save_results(self, patterns: List[Dict], base_filename: str = "pattern_enhanced_results") -> Dict[str, str]:
+    def save_results(self, patterns: List[Dict], base_filename: str = "pattern_enhanced_results", video_id: str = None) -> Dict[str, str]:
         """
         Save pattern detection results in multiple formats
         
         Args:
             patterns: List of detected patterns
             base_filename: Base filename for output files
+            video_id: YouTube video ID for generating URLs (optional)
             
         Returns:
             Dictionary of created filenames
@@ -333,7 +334,12 @@ class PatternEnhancedDetector:
             ])
             writer.writeheader()
             
-            base_url = 'https://www.youtube.com/live/Z7sjETGD-dg?t='
+            # Generate YouTube URL based on video_id parameter
+            if video_id:
+                base_url = f'https://www.youtube.com/watch?v={video_id}&t='
+            else:
+                # Fallback to original URL if no video_id provided
+                base_url = 'https://www.youtube.com/live/Z7sjETGD-dg?t='
             
             for pattern in patterns:
                 seconds = int(pattern['start_time_ms'] / 1000)
@@ -402,7 +408,12 @@ class PatternEnhancedDetector:
             
             f.write(f"## Detected Race Start Sequences\n\n")
             
-            base_url = 'https://www.youtube.com/live/Z7sjETGD-dg?t='
+            # Generate YouTube URL based on video_id parameter
+            if video_id:
+                base_url = f'https://www.youtube.com/watch?v={video_id}&t='
+            else:
+                # Fallback to original URL if no video_id provided
+                base_url = 'https://www.youtube.com/live/Z7sjETGD-dg?t='
             
             for pattern in patterns:
                 seconds = int(pattern['start_time_ms'] / 1000)
