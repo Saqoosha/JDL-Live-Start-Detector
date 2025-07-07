@@ -36,6 +36,18 @@ uv pip install -e .
 
 ## Common Commands
 
+### YouTube Processing Pipeline (NEW)
+```bash
+# Process any YouTube JDL video (download + detect + generate links)
+uv run python scripts/youtube_jdl_processor.py "https://www.youtube.com/watch?v=VIDEO_ID"
+
+# Process existing audio file (skip download)
+uv run python scripts/youtube_jdl_processor.py "https://www.youtube.com/watch?v=VIDEO_ID" --skip-download
+
+# Download audio only
+uv run python scripts/youtube_audio_downloader.py "https://www.youtube.com/watch?v=VIDEO_ID"
+```
+
 ### Production System
 ```bash
 # Run JDL race start detection (main command)
@@ -88,10 +100,16 @@ The system uses carefully tuned parameters optimized for JDL live stream conditi
 
 ## Output Formats
 
-The system generates comprehensive output formats:
-- **results/JAPAN DRONE LEAGUE 2025 Round4 Semi Final & Final_Z7sjETGD-dg.csv**: Race start timings with YouTube URLs
-- **results/JAPAN DRONE LEAGUE 2025 Round4 Semi Final & Final_Z7sjETGD-dg_detailed.txt**: Human-readable detailed report
-- **results/JAPAN DRONE LEAGUE 2025 Round4 Semi Final & Final_Z7sjETGD-dg_links.md**: Markdown navigation with YouTube links
+The YouTube processing pipeline generates dynamic output formats:
+- **CSV Format**: `results/VIDEO_TITLE_VIDEO_ID.csv` - Race start timings with correct YouTube URLs
+- **Detailed Report**: `results/VIDEO_TITLE_VIDEO_ID_detailed.txt` - Human-readable timing analysis
+- **Markdown Links**: `results/VIDEO_TITLE_VIDEO_ID_links.md` - Clickable race start navigation
+
+**Recent Results**:
+- **Z7sjETGD-dg**: 23 patterns detected (includes breakthrough 66:17 pattern)
+- **MSoaNUMg2yo**: 47 patterns detected (4+ hour video successfully processed)
+
+**Key Feature**: Dynamic YouTube URL generation using correct video IDs (fixed hardcoded URL issue)
 
 ## Performance Characteristics
 

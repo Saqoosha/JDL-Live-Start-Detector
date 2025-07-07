@@ -26,6 +26,8 @@ jdl-live-start-detector/
 │   └── JAPAN DRONE LEAGUE 2025 Round4 Semi Final & Final_Z7sjETGD-dg_links.md
 ├── scripts/              # Detection system
 │   ├── jdl_detector.py                 # 🌟 Main production script
+│   ├── youtube_jdl_processor.py        # 🎬 YouTube processing pipeline (NEW)
+│   ├── youtube_audio_downloader.py     # YouTube audio extraction (NEW)
 │   ├── pattern_enhanced_detector.py    # Core pattern detection engine
 │   ├── hybrid_configurable_detector.py # Underlying detection algorithms
 │   └── create_youtube_links.py         # Link generation utilities
@@ -48,31 +50,44 @@ uv venv
 uv pip install -e .
 ```
 
-### 2. Detect Race Starts
+### 2. Process YouTube Videos (NEW)
 ```bash
-# Main detection command (recommended)
+# Complete pipeline: Download + Detect + Generate links
+uv run python scripts/youtube_jdl_processor.py "https://www.youtube.com/watch?v=VIDEO_ID"
+
+# Process existing downloaded audio
+uv run python scripts/youtube_jdl_processor.py "https://www.youtube.com/watch?v=VIDEO_ID" --skip-download
+
+# Download audio only
+uv run python scripts/youtube_audio_downloader.py "https://www.youtube.com/watch?v=VIDEO_ID"
+```
+
+### 3. Legacy Local Detection
+```bash
+# Local video file detection
 uv run python scripts/jdl_detector.py
 
 # Check results
-open results/JAPAN_DRONE_LEAGUE_*_links.md
+open results/VIDEO_TITLE_VIDEO_ID_links.md
 ```
 
 ## 🎵 Detection Results
 
-### COUNT→GO Pattern Detection (Current System)
-**Successfully detected 23 race start patterns** with revolutionary accuracy:
+### Recent YouTube Processing Results
+- **Z7sjETGD-dg** (Round4 Semi Final & Final): **23 patterns** detected (135 minutes)
+- **MSoaNUMg2yo** (Round4 Qualify): **47 patterns** detected (264 minutes) 
 
-- **Processing Time**: 46.7 seconds for 135-minute video
-- **Gap Consistency**: Excellent (2.3-6.3 seconds range)
+### COUNT→GO Pattern Detection Performance
+- **Processing Speed**: Real-time capable (4+ hour videos supported)
+- **Gap Consistency**: Excellent (2-10 second range validation)
 - **False Positives**: Minimal due to dual-template validation  
-- **Output Formats**: CSV, detailed text, Markdown navigation
+- **URL Generation**: Dynamic YouTube links with correct video IDs (FIXED)
 
-### Pattern Summary
+### Pattern Summary Example (Z7sjETGD-dg)
 ```
-Pattern 1:  08:46 (Gap: 3.8s) → https://youtube.com/live/Z7sjETGD-dg?t=526
-Pattern 2:  09:52 (Gap: 4.2s) → https://youtube.com/live/Z7sjETGD-dg?t=592
-Pattern 3:  14:37 (Gap: 6.3s) → https://youtube.com/live/Z7sjETGD-dg?t=877
-Pattern 13: 66:17 (Gap: 3.4s) → https://youtube.com/live/Z7sjETGD-dg?t=3977 [BREAKTHROUGH: Missing pattern discovered!]
+Pattern 1:  08:46 (Gap: 3.8s) → https://youtube.com/watch?v=Z7sjETGD-dg&t=526
+Pattern 2:  09:52 (Gap: 4.2s) → https://youtube.com/watch?v=Z7sjETGD-dg&t=592
+Pattern 13: 66:17 (Gap: 3.4s) → https://youtube.com/watch?v=Z7sjETGD-dg&t=3977 [BREAKTHROUGH]
 ...23 total verified race start sequences
 ```
 
