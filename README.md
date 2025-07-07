@@ -226,8 +226,8 @@ uv run youtube-beep-detect "https://youtube.com/live/Z7sjETGD-dg"
 
 ## 🔗 Links
 
-- **Repository**: https://github.com/saqoosha/jdl-beep-detector
-- **Documentation**: https://github.com/saqoosha/jdl-beep-detector#readme  
-- **Issues**: https://github.com/saqoosha/jdl-beep-detector/issues
+- **Repository**: https://github.com/Saqoosha/JDL-Live-Start-Detector
+- **Documentation**: https://github.com/Saqoosha/JDL-Live-Start-Detector#readme  
+- **Issues**: https://github.com/Saqoosha/JDL-Live-Start-Detector/issues
 
 *Revolutionary COUNT→GO Pattern Detection - Optimized for Japan Drone League live event synchronization*
