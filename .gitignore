@@ -1,0 +1,69 @@
+# JDL Beep Detector - Git Ignore File
+
+# Archive directory (development history)
+archive/
+
+# Results directory (generated outputs)
+results/
+
+# Large media files
+*.m4a
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Python environment
+.venv/
+venv/
+env/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Operating system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Audio processing temporary files
+*.wav.backup
+*.mp3.backup
