@@ -9,12 +9,12 @@ This is a specialized audio processing system for detecting beep sounds in Japan
 ## Environment Setup
 
 ```bash
-# Create virtual environment
-uv venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+# Modern approach: Create environment and install dependencies (2025 uv method)
+uv sync
 
-# Install dependencies
-uv pip install -r requirements.txt
+# Alternative: Step-by-step setup
+uv venv
+uv pip install -e .
 ```
 
 ## Core Architecture
@@ -39,19 +39,19 @@ uv pip install -r requirements.txt
 
 ```bash
 # Run full JDL video detection (main production use)
-python scripts/jdl_beep_detector.py
+uv run python scripts/jdl_beep_detector.py
 
 # Generate YouTube timestamp links from detection results
-python scripts/create_youtube_links.py
+uv run python scripts/create_youtube_links.py
 
 # Run comprehensive validation on all test samples
-python scripts/test_all_with_test5.py
+uv run python scripts/test_all_with_test5.py
 
 # Test single audio file (for debugging)
-python scripts/test_single.py test3.wav 22389  # filename and expected_time_ms
+uv run python scripts/test_single.py test3.wav 22389  # filename and expected_time_ms
 
 # Detect beeps in custom audio file
-python -c "
+uv run python -c "
 from scripts.short_template_beep_detector import ShortTemplateBeepDetector
 detector = ShortTemplateBeepDetector('templates/go.mp3', 'your_audio.wav')
 beeps = detector.process_audio()

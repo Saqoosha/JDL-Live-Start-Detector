@@ -1,7 +1,0 @@
-# JDL Beep Detector Requirements
-librosa>=0.11.0
-scipy>=1.16.0
-numpy>=2.2.0
-matplotlib>=3.10.0
-pydub>=0.25.0
-scikit-learn>=1.7.0

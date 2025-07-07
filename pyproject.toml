@@ -1,0 +1,55 @@
+[project]
+name = "jdl-beep-detector"
+version = "1.0.0"
+description = "Japan Drone League beep detection system for live stream synchronization"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "Saqoosha"},
+    {name = "Claude Code", email = "noreply@anthropic.com"}
+]
+keywords = ["audio", "beep", "detection", "jdl", "youtube", "synchronization"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence"
+]
+
+dependencies = [
+    "librosa>=0.11.0",
+    "scipy>=1.16.0", 
+    "numpy>=2.2.0",
+    "matplotlib>=3.10.0",
+    "pydub>=0.25.0",
+    "scikit-learn>=1.7.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/saqoosha/jdl-beep-detector"
+Repository = "https://github.com/saqoosha/jdl-beep-detector"
+Documentation = "https://github.com/saqoosha/jdl-beep-detector#readme"
+Issues = "https://github.com/saqoosha/jdl-beep-detector/issues"
+
+[project.scripts]
+jdl-detect = "scripts.jdl_beep_detector:detect_jdl_beeps"
+jdl-links = "scripts.create_youtube_links:create_youtube_links"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["scripts", "templates", "tests"]

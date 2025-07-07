@@ -33,20 +33,31 @@ jdl-live-start-detector/
 
 ## 🚀 Quick Start
 
-1. **Setup Environment:**
+1. **Setup Environment (2025 uv method):**
    ```bash
+   # Modern approach: Create environment and install dependencies
+   uv sync
+   
+   # Alternative: Step-by-step setup
    uv venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   uv pip install -r requirements.txt
+   uv pip install -e .
    ```
 
 2. **Run Detection on JDL Video:**
    ```bash
+   # With uv (recommended - automatically uses .venv)
+   uv run python scripts/jdl_beep_detector.py
+   
+   # Or with activated environment
    python scripts/jdl_beep_detector.py
    ```
 
 3. **Generate YouTube Links:**
    ```bash
+   # With uv (recommended)
+   uv run python scripts/create_youtube_links.py
+   
+   # Or with activated environment  
    python scripts/create_youtube_links.py
    ```
 
@@ -98,6 +109,10 @@ print(f"Found {len(beep_times)} beeps at: {beep_times}")
 
 Run comprehensive tests on all samples:
 ```bash
+# With uv (recommended)
+uv run python scripts/test_all_with_test5.py
+
+# Or with activated environment
 python scripts/test_all_with_test5.py
 ```
 
