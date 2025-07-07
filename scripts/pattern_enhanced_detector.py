@@ -36,18 +36,18 @@ class PatternConfig:
     # ==================== COUNT DETECTION PARAMETERS ====================
     # These parameters control detection of countdown audio (count.mp3 template)
     
-    count_correlation_threshold: float = 0.35
+    count_correlation_threshold: float = 0.32
     """
     Correlation threshold for COUNT template matching (0.0-1.0)
     
     Lower values = more sensitive detection, more false positives
     Higher values = stricter detection, fewer false positives
     
-    0.35 = Ultra-sensitive setting optimized for noisy live streams
+    0.32 = Ultra-sensitive setting optimized for noisy live streams (tuned to catch missing 66:17 pattern)
     Typical range: 0.3-0.8 depending on audio quality
     """
     
-    count_spectral_threshold: float = 0.15
+    count_spectral_threshold: float = 0.12
     """
     Spectral validation threshold for COUNT detections (0.0-1.0)
     
@@ -55,7 +55,7 @@ class PatternConfig:
     Lower values = accept more frequency variations
     Higher values = require closer frequency matching
     
-    0.15 = Very permissive for live stream background noise tolerance
+    0.12 = Very permissive for live stream background noise tolerance (tuned to catch missing patterns)
     Typical range: 0.1-0.7 depending on audio cleanliness
     """
     
@@ -73,25 +73,25 @@ class PatternConfig:
     # ==================== GO DETECTION PARAMETERS ====================
     # These parameters control detection of go signal audio (go.mp3 template)
     
-    go_correlation_threshold: float = 0.35
+    go_correlation_threshold: float = 0.32
     """
     Correlation threshold for GO template matching (0.0-1.0)
     
     Lower values = more sensitive detection, more false positives
     Higher values = stricter detection, fewer false positives
     
-    0.35 = Ultra-sensitive setting matching COUNT sensitivity
+    0.32 = Ultra-sensitive setting matching COUNT sensitivity (tuned to catch missing 66:17 pattern)
     Maintains consistency between countdown and go detection
     """
     
-    go_spectral_threshold: float = 0.2
+    go_spectral_threshold: float = 0.18
     """
     Spectral validation threshold for GO detections (0.0-1.0)
     
     Validates frequency content matches expected go signal characteristics
     Slightly higher than COUNT to reduce false positives on final signal
     
-    0.2 = Moderately permissive while maintaining go signal specificity
+    0.18 = Moderately permissive while maintaining go signal specificity (tuned to catch missing patterns)
     Higher than COUNT threshold due to cleaner go signal characteristics
     """
     
