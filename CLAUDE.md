@@ -31,9 +31,11 @@ uv pip install -e .
 - **Duplicate Removal**: 100ms window (allows detection of closely spaced beeps)
 
 ### Template System
-- **Primary Template**: `templates/go.mp3` - Main reference beep sound
-- **Alternative Template**: `templates/go_01.wav` - Secondary option for different beep types
+- **Primary Template**: `templates/go.mp3` - Main reference beep sound (avg error: 129.27ms)
+- **Alternative Template**: `templates/go_01.wav` - Equal performance option (avg error: 131.97ms)  
 - **Template Processing**: Automatically trims to first 0.5s and removes silence from onset
+- **Performance**: Both templates achieve equivalent results - complete tie (3/6 wins each)
+- **Template Selection**: go.mp3 performs better on long samples, go_01.wav on short samples
 
 ## Common Commands
 
@@ -57,6 +59,9 @@ detector = ShortTemplateBeepDetector('templates/go.mp3', 'your_audio.wav')
 beeps = detector.process_audio()
 print(f'Found {len(beeps)} beeps at: {beeps}')
 "
+
+# Compare both templates on all test samples
+uv run python test_both_templates.py
 ```
 
 ## Test Suite & Validation
@@ -64,7 +69,8 @@ print(f'Found {len(beeps)} beeps at: {beeps}')
 ### Test Audio Files
 - `tests/test.wav` through `tests/test6.wav` - Validated reference samples with known correct timings
 - **Ground Truth Values**: test.wav(15998ms), test2.wav(22000ms), test3.wav(22389ms), test4.wav(17255ms), test5.wav(248282ms), test6.wav(25970ms & 256490ms)
-- **Success Criteria**: All detections must be within 300ms of ground truth (current system achieves <150ms average)
+- **Success Criteria**: All detections must be within 300ms of ground truth (both templates achieve this)
+- **Template Performance**: go.mp3 avg 129.27ms, go_01.wav avg 131.97ms (equivalent performance)
 
 ### Validation Architecture
 The system maintains 100% success rate on test samples through:
@@ -105,5 +111,5 @@ The system generates multiple output formats for different use cases:
 
 - **Path Handling**: Scripts expect to run from project root; templates and results use relative paths
 - **Audio Formats**: Supports any format librosa can load (wav, mp3, m4a, etc.)
-- **Template Selection**: go.mp3 performs slightly better than go_01.wav for most cases
+- **Template Selection**: Both templates perform equivalently - go.mp3 for long samples, go_01.wav for short samples
 - **Memory Management**: Large files are processed in-memory; ensure sufficient RAM for video processing

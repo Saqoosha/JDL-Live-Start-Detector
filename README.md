@@ -87,6 +87,21 @@ jdl-live-start-detector/
 | test5.wav   | 81.96      | 🥇 Very Good |
 | test6.wav   | 50.35, 218.85 | ✅ Multiple Beeps |
 
+## 🎵 Template Performance Comparison
+
+Both audio templates achieve excellent results with the short template strategy:
+
+| Template | Average Error | Best Performance | Samples Won |
+|----------|---------------|------------------|-------------|
+| go.mp3 | 129.27 ms | Long samples (test5-6) | 3/6 |
+| go_01.wav | 131.97 ms | Short samples (test1-3) | 3/6 |
+
+**Key Findings:**
+- **Equivalent Performance**: Only 2.7ms average difference
+- **Template Flexibility**: Both achieve <300ms target on all samples  
+- **Short Template Strategy**: First 0.5s approach works optimally for both
+- **Production Ready**: Either template can be used based on preference
+
 ## 🎬 YouTube Integration
 
 All detected beep timings are converted to direct YouTube links:
@@ -99,10 +114,18 @@ All detected beep timings are converted to direct YouTube links:
 ```python
 from scripts.short_template_beep_detector import ShortTemplateBeepDetector
 
-# Detect beeps in any audio file
+# Detect beeps with go.mp3 template (recommended for long samples)
 detector = ShortTemplateBeepDetector("templates/go.mp3", "your_audio.wav")
 beep_times = detector.process_audio()
 print(f"Found {len(beep_times)} beeps at: {beep_times}")
+
+# Alternative: Use go_01.wav template (equivalent performance)
+detector = ShortTemplateBeepDetector("templates/go_01.wav", "your_audio.wav")
+beep_times = detector.process_audio()
+print(f"Found {len(beep_times)} beeps at: {beep_times}")
+
+# Compare both templates
+# uv run python test_both_templates.py
 ```
 
 ## 🧪 Testing
