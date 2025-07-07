@@ -1,7 +1,7 @@
 [project]
-name = "jdl-beep-detector"
+name = "jdl-live-start-detector"
 version = "1.0.0"
-description = "Japan Drone League beep detection system for live stream synchronization"
+description = "Japan Drone League COUNT→GO pattern detection system for race start detection and YouTube synchronization"
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
@@ -9,7 +9,7 @@ authors = [
     {name = "Saqoosha"},
     {name = "Claude Code", email = "noreply@anthropic.com"}
 ]
-keywords = ["audio", "beep", "detection", "jdl", "youtube", "synchronization"]
+keywords = ["audio", "pattern-detection", "count-go", "race-start", "jdl", "youtube", "synchronization", "temporal-analysis"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -39,16 +39,17 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/saqoosha/jdl-beep-detector"
-Repository = "https://github.com/saqoosha/jdl-beep-detector"
-Documentation = "https://github.com/saqoosha/jdl-beep-detector#readme"
-Issues = "https://github.com/saqoosha/jdl-beep-detector/issues"
+Homepage = "https://github.com/Saqoosha/JDL-Live-Start-Detector"
+Repository = "https://github.com/Saqoosha/JDL-Live-Start-Detector"
+Documentation = "https://github.com/Saqoosha/JDL-Live-Start-Detector#readme"
+Issues = "https://github.com/Saqoosha/JDL-Live-Start-Detector/issues"
 
 [project.scripts]
-jdl-detect = "scripts.jdl_beep_detector:detect_jdl_beeps"
+jdl-detect = "scripts.jdl_detector:main"
+jdl-pattern-detect = "scripts.pattern_enhanced_detector:detect_jdl_patterns_enhanced"
+jdl-youtube = "scripts.youtube_jdl_processor:main"
+jdl-download = "scripts.youtube_audio_downloader:main"
 jdl-links = "scripts.create_youtube_links:create_youtube_links"
-youtube-beep-detect = "scripts.youtube_beep_detector:main"
-final-youtube-beep-detect = "scripts.final_youtube_beep_detector:main"
 
 [build-system]
 requires = ["hatchling"]
